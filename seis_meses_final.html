@@ -1,0 +1,1210 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#0b0b18">
+<title>Seis Meses — El Universo que Construimos</title>
+<style>
+:root{
+  --bg:#070812; --bg2:#111329; --card:rgba(17,18,42,.78);
+  --line:rgba(255,255,255,.13); --text:#f8f3ff; --muted:#c9c3d9;
+  --pink:#f6a9cf; --rose:#ff7fac; --gold:#f5d18d; --lav:#9da8ff;
+  --shadow:0 20px 60px rgba(0,0,0,.36);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;width:100%;min-height:100%;background:var(--bg);color:var(--text);font-family:Georgia,"Times New Roman",serif;overflow-x:hidden}
+body{min-height:100svh}
+.poem-text{font-style:italic;line-height:2.05;letter-spacing:.01em}
+.verse{white-space:pre-line;line-height:2.02;font-size:1.08rem;color:#f1eaf7}
+.soft-divider{width:70px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:18px auto}
+button{font:inherit;color:inherit;border:0;cursor:pointer;touch-action:manipulation}
+#app{min-height:100svh;position:relative;overflow:hidden}
+.screen{position:absolute;inset:0;min-height:100svh;display:none;overflow:auto;padding:max(18px,env(safe-area-inset-top)) 18px max(26px,env(safe-area-inset-bottom));}
+.screen.active{display:block;animation:fadeIn .8s ease both}
+@keyframes fadeIn{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:none}}
+.bg-stars,.particles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.star{position:absolute;border-radius:50%;background:#fff;box-shadow:0 0 10px rgba(255,255,255,.75);animation:twinkle 2s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.18)}}
+.particle{position:absolute;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.72);animation:floatUp linear forwards}
+@keyframes floatUp{from{transform:translateY(20px) scale(.8);opacity:0}15%{opacity:1}to{transform:translateY(-120px) scale(1.3);opacity:0}}
+.wrap{position:relative;z-index:2;max-width:920px;margin:0 auto}
+.center{min-height:calc(100svh - 44px);display:grid;place-items:center;text-align:center}
+.hero{max-width:680px;padding:28px 10px}
+.eyebrow{letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-size:.72rem;margin-bottom:18px}
+.hero-star{font-size:4.6rem;filter:drop-shadow(0 0 26px rgba(245,209,141,.55));animation:pulse 2.8s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.06);filter:drop-shadow(0 0 40px rgba(245,209,141,.75))}}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(2.1rem,8vw,4.3rem);line-height:1.02;margin-bottom:16px}
+h2{font-size:clamp(1.8rem,6vw,3rem);line-height:1.06}
+.lead{font-size:clamp(1rem,4.2vw,1.25rem);color:var(--muted);line-height:1.8}
+.poem{font-size:clamp(1.05rem,4.3vw,1.35rem);line-height:1.9;color:#efe8f7}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:15px 22px;border-radius:999px;background:linear-gradient(135deg,#ff9cc5,#c58cff);box-shadow:0 14px 30px rgba(221,120,183,.25);font-weight:700;margin:10px 6px}
+.ghost{background:rgba(255,255,255,.06);border:1px solid var(--line);box-shadow:none}
+.small{font-size:.84rem;color:var(--muted)}
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:10px;justify-content:space-between;padding:8px 0 14px;background:linear-gradient(var(--bg) 65%,transparent)}
+.progress-wrap{flex:1;max-width:500px}
+.progress-label{font-size:.72rem;color:var(--muted);margin-bottom:5px}
+.progress{height:7px;background:rgba(255,255,255,.08);border-radius:999px;overflow:hidden}
+.progress i{display:block;height:100%;background:linear-gradient(90deg,var(--pink),var(--lav));border-radius:999px;transition:width .6s ease}
+.iconbtn{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid var(--line)}
+.titleblock{text-align:center;padding:34px 8px 20px}
+.subtitle{color:var(--muted);max-width:620px;margin:0 auto;line-height:1.7}
+.card-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.card{background:linear-gradient(180deg,rgba(20,21,48,.84),rgba(12,13,29,.8));border:1px solid var(--line);border-radius:24px;padding:18px;box-shadow:var(--shadow);backdrop-filter:blur(10px)}
+.card h3{margin-bottom:8px;font-size:1.05rem}
+.card p{color:var(--muted);line-height:1.65;margin-bottom:0}
+.map{position:relative;height:min(72svh,620px);min-height:490px;border-radius:32px;background:
+ radial-gradient(circle at 50% 50%,rgba(255,158,206,.1),transparent 42%),
+ radial-gradient(circle at 20% 80%,rgba(150,161,255,.12),transparent 30%),
+ linear-gradient(180deg,#0b0d20,#090a16);
+ border:1px solid var(--line);overflow:hidden;box-shadow:var(--shadow)}
+.map-line{position:absolute;height:2px;background:linear-gradient(90deg,transparent,rgba(245,209,141,.5),transparent);transform-origin:left center;opacity:.55}
+.memory{position:absolute;width:62px;height:62px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#fff,#f6a9cf 38%,#9377ff 100%);box-shadow:0 0 28px rgba(246,169,207,.48);font-size:1.25rem;border:2px solid rgba(255,255,255,.35)}
+.memory.locked{opacity:.32;filter:grayscale(.7)}
+.memory small{position:absolute;top:68px;left:50%;transform:translateX(-50%);white-space:nowrap;color:var(--muted);font-size:.74rem}
+.memory.found{animation:found .55s ease}
+@keyframes found{50%{transform:scale(1.22)}}
+.modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(2,3,8,.78);backdrop-filter:blur(8px);z-index:100}
+.modal.show{display:flex}
+.modal-box{width:min(720px,100%);max-height:85svh;overflow:auto;background:linear-gradient(180deg,#17182f,#0d0e1d);border:1px solid var(--line);border-radius:28px;padding:24px;box-shadow:var(--shadow)}
+.modal-box h3{font-size:1.5rem}
+.modal-box p{color:#ded8e7;line-height:1.85}
+.modal-actions{text-align:right;margin-top:18px}
+.garden{position:relative;min-height:620px;border-radius:32px;overflow:hidden;background:
+ radial-gradient(circle at 50% 10%,rgba(245,209,141,.08),transparent 28%),
+ linear-gradient(180deg,#091127 0%,#0b1a1b 60%,#10211d 100%);
+ border:1px solid var(--line)}
+.moon{position:absolute;right:10%;top:7%;font-size:4.5rem;filter:drop-shadow(0 0 30px rgba(245,209,141,.2))}
+.grass{position:absolute;bottom:0;left:0;right:0;height:28%;background:
+ radial-gradient(ellipse at 10% 100%,#173429 0 24%,transparent 25%),
+ radial-gradient(ellipse at 35% 110%,#173429 0 25%,transparent 26%),
+ radial-gradient(ellipse at 70% 105%,#173429 0 27%,transparent 28%),
+ radial-gradient(ellipse at 90% 105%,#173429 0 22%,transparent 23%),
+ linear-gradient(#132a24,#0b1c17)}
+.flower{position:absolute;width:58px;height:58px;border-radius:50%;background:transparent;filter:drop-shadow(0 0 12px rgba(246,169,207,.35));font-size:0}
+.flower:before{content:"";position:absolute;inset:3px;border-radius:50%;background:
+ radial-gradient(circle at 50% 13%,#f8c6df 0 20%,transparent 21%),
+ radial-gradient(circle at 87% 39%,#efa4c9 0 20%,transparent 21%),
+ radial-gradient(circle at 72% 82%,#d99ad4 0 20%,transparent 21%),
+ radial-gradient(circle at 28% 82%,#c49adf 0 20%,transparent 21%),
+ radial-gradient(circle at 13% 39%,#f1afd0 0 20%,transparent 21%)}
+.flower:after{content:"";position:absolute;left:50%;top:50%;width:17px;height:17px;transform:translate(-50%,-50%);border-radius:50%;background:#f5d18d;box-shadow:0 0 12px rgba(245,209,141,.45)}
+.flower.found{filter:grayscale(.65);opacity:.38}.flower.found:after{background:#aaa}
+.flower-stem{position:absolute;width:3px;height:66px;background:linear-gradient(#4f8b65,#234c39);border-radius:999px;transform-origin:top;pointer-events:none}
+.flower-leaf{position:absolute;width:17px;height:8px;background:#4f8b65;border-radius:100% 0 100% 0;transform:rotate(-25deg);pointer-events:none}
+.firefly{position:absolute;width:7px;height:7px;border-radius:50%;background:#f7e7a4;box-shadow:0 0 14px #f7e7a4;animation:drift 4s ease-in-out infinite}
+@keyframes drift{50%{transform:translate(18px,-24px)}}
+.mailbox-scene{min-height:560px;display:grid;place-items:center;position:relative}
+.mailbox{position:relative;width:min(560px,94%);height:330px;filter:drop-shadow(0 24px 45px rgba(0,0,0,.38))}
+.mailbox .box-body{position:absolute;left:8%;right:8%;bottom:9%;height:66%;background:linear-gradient(180deg,#31405f,#1c2842);border:2px solid rgba(255,255,255,.15);border-radius:10px 10px 18px 18px;box-shadow:inset 0 0 30px rgba(255,255,255,.05)}
+.mailbox .rounded-top{position:absolute;left:8%;right:8%;top:8%;height:33%;background:linear-gradient(180deg,#43557d,#273652);border:2px solid rgba(255,255,255,.15);border-bottom:none;border-radius:58px 58px 0 0}
+.mailbox .door-face{position:absolute;left:8%;right:8%;bottom:9%;height:66%;border-radius:10px 10px 18px 18px;background:linear-gradient(90deg,rgba(255,255,255,.04),transparent 18%,transparent 82%,rgba(255,255,255,.04))}
+.mailbox .flag{position:absolute;right:13%;top:26%;width:7px;height:112px;background:#d85b8d;border-radius:999px;z-index:5;box-shadow:0 0 0 2px rgba(0,0,0,.12)}
+.mailbox .flag:before{content:"";position:absolute;left:-2px;top:-1px;width:34px;height:20px;border-radius:5px 8px 2px 2px;background:#ef76a5}
+.mailbox .flag:after{content:"";position:absolute;bottom:-5px;left:-5px;width:17px;height:17px;border-radius:50%;background:#e7b0cf}
+.mailbox .handle{position:absolute;left:50%;bottom:18%;transform:translateX(-50%);width:78px;height:18px;border-radius:999px;background:#101624;border:2px solid #7381a8;z-index:5}
+.mailbox .slot{position:absolute;left:18%;right:18%;top:24%;height:26px;border-radius:999px;background:#0b1020;border:2px solid rgba(255,255,255,.10);z-index:5}
+.mailbox .post{position:absolute;left:43%;right:43%;bottom:0;height:22%;background:linear-gradient(90deg,#5d433d,#3a2826);border-radius:7px 7px 0 0}
+.mailbox .nameplate{position:absolute;left:50%;transform:translateX(-50%);top:54%;background:#f5d18d;color:#2c1f1f;padding:6px 13px;border-radius:5px;font-family:Georgia,serif;font-size:.78rem;letter-spacing:.12em;z-index:6;box-shadow:0 6px 14px rgba(0,0,0,.22)}
+.letter-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:20px}
+.letter{min-height:150px;text-align:left;cursor:pointer;transition:transform .2s,box-shadow .2s}
+.letter:active{transform:scale(.985)}
+.letter .seal{font-size:1.8rem;margin-bottom:12px}
+.puzzle-wrap{text-align:center}
+.puzzle{width:min(360px,92vw);aspect-ratio:1;margin:18px auto;display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:5px;border-radius:22px;background:#181a32}
+.piece{border-radius:15px;background:linear-gradient(135deg,#f6a9cf,#7f82ea);display:grid;place-items:center;color:rgba(255,255,255,.9);font-weight:700;font-size:1.3rem;min-height:80px}
+.piece.empty{background:rgba(255,255,255,.05)}
+.house-wrap{display:grid;gap:18px}
+.house{position:relative;min-height:420px;border-radius:32px;background:linear-gradient(180deg,#12152a,#0b0e1b);border:1px solid var(--line);overflow:hidden}
+.house-sky{position:absolute;inset:0 0 42% 0;background:linear-gradient(180deg,#07091a,#151b38)}
+.roof{position:absolute;left:16%;right:16%;top:26%;height:0;border-left:34vw solid transparent;border-right:34vw solid transparent;border-bottom:120px solid #2c1d3c;max-width:600px;margin:auto}
+.house-body{position:absolute;left:12%;right:12%;bottom:12%;height:44%;background:linear-gradient(180deg,#34264b,#251b39);border:1px solid rgba(255,255,255,.12);border-radius:16px;box-shadow:inset 0 0 35px rgba(255,255,255,.025)}
+.window,.door{position:absolute;background:linear-gradient(180deg,#0a1022,#121a30);border:4px solid #8d78b2;box-shadow:0 0 22px rgba(245,209,141,.16),inset 0 0 18px rgba(157,168,255,.08)}
+.window{width:64px;height:78px;top:22%;border-radius:8px}
+.window.one{left:9%}
+.window.two{right:9%}
+.door{width:62px;height:108px;left:50%;bottom:0;transform:translateX(-50%);border-radius:10px 10px 0 0}
+.door:after{content:"•";position:absolute;right:8px;top:48%;color:#f5d18d;font-size:16px}
+
+.gardenpatch{position:absolute;left:8%;right:8%;bottom:2%;height:14%;border-radius:50% 50% 0 0;background:#102b20}
+.house-item{position:absolute;display:none;z-index:5;font-size:2.2rem;animation:fadeIn .45s ease}
+.house-item.show{display:block}
+.couch{left:23%;bottom:25%}.bed{right:22%;bottom:27%}.kitchen{left:8%;bottom:23%}.cat{left:18%;bottom:6%}.dog{right:18%;bottom:6%}.tree{right:8%;bottom:3%}
+.unlock-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.unlock{padding:16px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid var(--line);text-align:left}
+.unlock.done{background:rgba(246,169,207,.1);border-color:rgba(246,169,207,.35)}
+.museum{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.frame{aspect-ratio:4/3;border-radius:24px;background:linear-gradient(135deg,#2a2344,#141522);border:10px solid #6d4e55;box-shadow:var(--shadow);padding:16px;display:flex;align-items:flex-end;cursor:pointer;position:relative;overflow:hidden}
+.frame:before{content:"";position:absolute;inset:16px;background:radial-gradient(circle at 30% 30%,rgba(246,169,207,.22),transparent 38%),linear-gradient(145deg,rgba(255,255,255,.08),transparent);border-radius:10px}
+.frame span{position:relative;z-index:2;color:#f7eaf2;font-size:1rem}
+.hearts{text-align:center}
+.heart-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:520px;margin:26px auto}
+.big-heart{font-size:3.3rem;min-height:95px;border-radius:24px;background:rgba(255,255,255,.04);border:1px solid var(--line);transition:transform .2s,filter .3s}
+.big-heart.lit{filter:drop-shadow(0 0 20px rgba(255,125,170,.55));background:rgba(255,125,170,.08)}
+.big-heart.off{filter:grayscale(1);opacity:.35}
+.big-heart:active{transform:scale(.94)}
+.letter-final{max-width:760px;margin:18px auto;padding:26px;border-radius:30px;background:linear-gradient(180deg,rgba(23,24,47,.94),rgba(10,11,22,.94));border:1px solid var(--line);box-shadow:var(--shadow)}
+.typewriter{white-space:pre-line;line-height:1.95;color:#f0eaf5;font-size:1.06rem}
+.nextline{opacity:0;transform:translateY(8px);transition:opacity .8s,transform .8s}
+.nextline.show{opacity:1;transform:none}
+.choice-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin-top:18px}
+.note{text-align:center;color:var(--muted);line-height:1.7}
+.badge{display:inline-block;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid var(--line);font-size:.75rem;color:var(--muted)}
+.flash{animation:flash .7s ease}
+@keyframes flash{50%{box-shadow:0 0 0 8px rgba(246,169,207,.08),0 0 50px rgba(246,169,207,.45)}}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:200}
+.confetti span{position:absolute;width:9px;height:14px;animation:confetti 1.8s cubic-bezier(.2,.8,.2,1) forwards}
+@keyframes confetti{to{transform:translate3d(var(--x),110vh,0) rotate(720deg);opacity:0}}
+@media (min-width:760px){
+  .screen{padding-left:28px;padding-right:28px}
+  .card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .letter-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .unlock-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .museum{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (orientation:landscape) and (max-height:560px){
+  .screen{padding-top:10px}
+  .center{min-height:calc(100svh - 20px)}
+  .hero{padding:10px}
+  .hero-star{font-size:3.4rem}
+  h1{font-size:2rem}
+  .lead{font-size:.95rem}
+  .map{height:calc(100svh - 92px);min-height:360px}
+  .garden{min-height:420px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*:before,*:after{animation-duration:.001ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition:none!important}
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="bg-stars" id="bgStars"></div>
+  <div class="particles" id="particles"></div>
+
+  <section id="start" class="screen active">
+    <div class="center">
+      <div class="hero wrap">
+        <div class="eyebrow">13 · seis meses</div>
+        <div class="hero-star">✦</div>
+        <h1>Hay historias que comienzan con una persona…</h1>
+        <p class="lead">…y terminan convirtiéndose en un universo entero.</p>
+        <p class="poem">Hoy ese universo cumple <strong>6 meses</strong>.</p>
+        <button class="cta" onclick="startGame()">ENTRAR A NUESTRO UNIVERSO ✨</button>
+        <div><button class="iconbtn" onclick="toggleMusic()" title="Sonido">♫</button></div>
+        <p class="small">El sonido es opcional. No se reproduce automáticamente.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="world1" class="screen">
+    <div class="wrap">
+      <div class="topbar">
+        <button class="iconbtn" onclick="goTo('start')">←</button>
+        <div class="progress-wrap">
+          <div class="progress-label">1 de 6 · Los comienzos</div>
+          <div class="progress"><i style="width:16.6%"></i></div>
+        </div>
+        <button class="iconbtn" onclick="toggleMusic()">♫</button>
+      </div>
+      <div class="titleblock">
+        <div class="eyebrow">Mundo I</div>
+        <h2>Los comienzos</h2>
+        <p class="subtitle">Hay recuerdos que parecen pequeños mientras ocurren. Después descubres que eran el principio de todo. Aquí no tienes que correr: toca las luces, lee cada fragmento y deja que la historia te lleve un poquito más lejos.</p>
+        <div class="badge" id="memoryCount">0 / 5 recuerdos</div>
+      </div>
+      <div class="map" id="map">
+        <div class="map-line" style="left:13%;top:26%;width:38%;transform:rotate(24deg)"></div>
+        <div class="map-line" style="left:50%;top:42%;width:34%;transform:rotate(-23deg)"></div>
+        <div class="map-line" style="left:29%;top:68%;width:42%;transform:rotate(-8deg)"></div>
+        <button class="memory" style="left:9%;top:18%" data-memory="0">✦<small>Un inicio</small></button>
+        <button class="memory" style="left:43%;top:28%" data-memory="1">✦<small>Una mirada</small></button>
+        <button class="memory" style="right:9%;top:19%" data-memory="2">✦<small>Un detalle</small></button>
+        <button class="memory" style="left:18%;bottom:17%" data-memory="3">✦<small>Un recuerdo</small></button>
+        <button class="memory" style="right:18%;bottom:16%" data-memory="4">✦<small>Una elección</small></button>
+        <button id="hiddenMemory" class="memory locked" style="left:50%;bottom:39%;transform:translateX(-50%);display:none">♡<small>?</small></button>
+      </div>
+      <p class="note" id="world1Note">Encuentra las cinco estrellas para abrir el siguiente secreto.</p>
+    </div>
+  </section>
+
+  <section id="world2" class="screen">
+    <div class="wrap">
+      <div class="topbar">
+        <button class="iconbtn" onclick="goTo('world1')">←</button>
+        <div class="progress-wrap"><div class="progress-label">2 de 6 · El jardín</div><div class="progress"><i style="width:33.3%"></i></div></div>
+        <button class="iconbtn" onclick="toggleMusic()">♫</button>
+      </div>
+      <div class="titleblock">
+        <div class="eyebrow">Mundo II</div>
+        <h2>El jardín de nosotros</h2>
+        <p class="subtitle">Encuentra las seis flores. Cada una guarda un pedacito de estos seis meses. Y cuando creas que ya viste todo, mira bien: algunas cosas bonitas se esconden donde menos las esperas.</p>
+        <div class="badge" id="flowerCount">0 / 6 flores</div>
+      </div>
+      <div class="garden" id="garden">
+        <div class="moon">☾</div>
+        <div class="grass"></div>
+      </div>
+      <p class="note" id="gardenNote">Hay una flor especial escondida entre todas las demás.</p>
+    </div>
+  </section>
+
+  <section id="world3" class="screen">
+    <div class="wrap">
+      <div class="topbar">
+        <button class="iconbtn" onclick="goTo('world2')">←</button>
+        <div class="progress-wrap"><div class="progress-label">3 de 6 · El buzón</div><div class="progress"><i style="width:50%"></i></div></div>
+        <button class="iconbtn" onclick="toggleMusic()">♫</button>
+      </div>
+      <div class="titleblock">
+        <div class="eyebrow">Mundo III</div>
+        <h2>Cosas que quizá nunca te dije de la forma correcta</h2>
+        <p class="subtitle">Abre las cartas. No hay respuestas correctas aquí. Solo cosas que quería dejarte. Algunas hablan de lo que eres para mí; otras, de lo que todavía sueño que podamos vivir.</p>
+      </div>
+      <div class="mailbox-scene">
+        <div class="mailbox">
+          <div class="rounded-top"></div><div class="box-body"></div><div class="door-face"></div>
+          <div class="slot"></div><div class="flag"></div><div class="handle"></div>
+          <div class="nameplate">PARA TI</div><div class="post"></div>
+        </div>
+      </div>
+      <div class="letter-grid" id="letterGrid"></div>
+      <p class="note" id="letterNote">Abre todas las cartas para continuar.</p>
+    </div>
+  </section>
+
+  <section id="world4" class="screen">
+    <div class="wrap">
+      <div class="topbar">
+        <button class="iconbtn" onclick="goTo('world3')">←</button>
+        <div class="progress-wrap"><div class="progress-label">4 de 6 · El rompecabezas</div><div class="progress"><i style="width:66.6%"></i></div></div>
+        <button class="iconbtn" onclick="toggleMusic()">♫</button>
+      </div>
+      <div class="titleblock">
+        <div class="eyebrow">Mundo IV</div>
+        <h2>Las piezas</h2>
+        <p class="subtitle">Toca dos piezas para intercambiarlas. No tienes que hacerlo perfecto: solo encontrar el orden. Y si te equivocas, no pasa nada; incluso las historias bonitas tienen piezas que tardan un poquito más en encontrar su sitio.</p>
+      </div>
+      <div class="puzzle-wrap">
+        <div id="puzzleStatus" class="badge">0 / 9 en su lugar</div>
+        <div class="puzzle" id="puzzle"></div>
+        <button class="cta ghost" id="resetPuzzle" onclick="resetPuzzle()">Revolver piezas</button>
+        <div id="puzzleMessage" class="note"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="world5" class="screen">
+    <div class="wrap">
+      <div class="topbar">
+        <button class="iconbtn" onclick="goTo('world4')">←</button>
+        <div class="progress-wrap"><div class="progress-label">5 de 6 · Nuestra casa</div><div class="progress"><i style="width:83.3%"></i></div></div>
+        <button class="iconbtn" onclick="toggleMusic()">♫</button>
+      </div>
+      <div class="titleblock">
+        <div class="eyebrow">Mundo V</div>
+        <h2>Nuestra casa</h2>
+        <p class="subtitle">No es un plano real. Es una pequeña forma de imaginar todo lo que todavía podemos construir: un lugar donde los días normales puedan sentirse especiales simplemente porque estamos juntos.</p>
+      </div>
+      <div class="house-wrap">
+        <div class="house" id="house">
+          <div class="house-sky"></div>
+          <div class="roof"></div>
+          <div class="house-body">
+            <div class="window one"></div><div class="window two"></div><div class="door"></div>
+          </div>
+          <div class="gardenpatch"></div>
+          <div class="house-item couch">🛋️</div>
+          <div class="house-item bed">🛏️</div>
+          <div class="house-item kitchen">🍽️</div>
+          <div class="house-item cat">🐈</div>
+          <div class="house-item dog">🐕</div>
+          <div class="house-item tree">🌳</div>
+        </div>
+        <div class="unlock-grid" id="unlockGrid"></div>
+        <div id="houseNote" class="note">Desbloquea cada rincón.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="world6" class="screen">
+    <div class="wrap">
+      <div class="topbar">
+        <button class="iconbtn" onclick="goTo('world5')">←</button>
+        <div class="progress-wrap"><div class="progress-label">6 de 6 · Nuestro museo</div><div class="progress"><i style="width:100%"></i></div></div>
+        <button class="iconbtn" onclick="toggleMusic()">♫</button>
+      </div>
+      <div class="titleblock">
+        <div class="eyebrow">Mundo VI</div>
+        <h2>Nuestro museo</h2>
+        <p class="subtitle">Porque los museos guardan cosas que no quieren olvidar. Yo quiero guardar nuestra historia: incluso los momentos pequeños, las risas inesperadas y esas cosas que quizá nadie más entendería, pero que para mí significan muchísimo.</p>
+      </div>
+      <div class="museum" id="museum"></div>
+      <p id="museumNote" class="note">Toca cada cuadro para recordar un detalle.</p>
+      <div style="text-align:center;margin:20px 0"><button class="cta" id="goHearts" style="display:none" onclick="goTo('hearts')">CONTINUAR ❤️</button></div>
+    </div>
+  </section>
+
+  <section id="hearts" class="screen">
+    <div class="center">
+      <div class="hero wrap hearts">
+        <div class="eyebrow">Un último mundo</div>
+        <h2>Los seis corazones</h2>
+        <p class="lead">Cinco meses pueden contarse. Seis también. Pero lo que siento por ti no cabe en un calendario.</p>
+        <div class="heart-row" id="heartRow"></div>
+        <div class="soft-divider"></div>
+        <p id="heartNote" class="poem">Cada corazón guarda un pequeño verso. Tócalos despacio; el último no se abrirá como los demás.</p>
+        <p id="heartVerse" class="verse"></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="final" class="screen">
+    <div class="center">
+      <div class="hero wrap">
+        <div class="eyebrow">El final secreto</div>
+        <h2 id="finalIntro">Creíste que este era el final.</h2>
+        <p id="finalNo" class="poem">No.</p>
+        <p id="finalMissing" class="poem">Me faltaba decirte algo.</p>
+        <div class="letter-final" id="finalLetter" style="display:none">
+          <div class="eyebrow">Una carta para ti</div>
+          <p class="lead">Llegaste hasta el último rincón. Pero este último rincón no es una pantalla más: es todo lo que no quería dejar fuera de nuestra historia.</p>
+          <div class="typewriter" id="typewriter"></div>
+          <div id="postscript" class="nextline" style="margin-top:22px">
+            <p class="poem"><strong>P.D.</strong></p>
+            <p class="poem">Todavía no has descubierto todo.</p>
+            <button class="cta" onclick="showLastSecret()">¿QUÉ FALTA? 👀</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="last" class="screen">
+    <div class="center">
+      <div class="hero wrap">
+        <div class="hero-star">✦</div>
+        <div class="eyebrow">Próximo capítulo</div>
+        <h1>Falta nuestro próximo capítulo.</h1>
+        <p class="lead">Porque seis meses nunca fueron el final. Son apenas el lugar desde donde podemos mirar todo lo que todavía nos falta descubrir.</p>
+        <p class="poem">Si esta historia fuera un libro, hoy no cerraría la portada. La dejaría abierta, esperando la siguiente página.</p>
+        <p class="poem">Feliz sexto mes, mi amor.</p>
+        <p class="poem">Gracias por ser parte de mi presente y de todos esos futuros que alguna vez me gusta imaginar.</p>
+        <p class="poem"><strong>Te elegiría otra vez.</strong></p>
+        <button class="cta" onclick="restartGame()">VOLVER A NUESTRO UNIVERSO ❤️</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="modal" id="modal" aria-hidden="true">
+  <div class="modal-box">
+    <div id="modalBody"></div>
+    <div class="modal-actions"><button class="cta ghost" onclick="closeModal()">Cerrar</button></div>
+  </div>
+</div>
+<div class="confetti" id="confetti"></div>
+
+<script>
+'use strict';
+
+const memoryTexts = [
+{title:"Antes de saberlo",text:`Antes de saber que vendrías,
+el tiempo solo pasaba,
+pero entonces llegaste tú
+y hasta la tarde más callada
+pareció llevar otra melodía.
+
+Hay historias que no hacen ruido
+cuando empiezan a florecer;
+solo dejan una pequeña luz
+y esperan que el corazón,
+con los meses, aprenda a entender.`},
+{title:"Una mirada",text:`Hay miradas que duran un instante
+y, sin embargo, se quedan años.
+Como una estrella que cruza el cielo
+sin pedir permiso,
+sin anunciar su paso.
+
+Quizá no sabía qué estaba comenzando,
+quizá tampoco lo sabía el destino,
+pero algo en mí entendió, despacio,
+que entre tantas personas del mundo
+había una que quería conocer más de cerca.`},
+{title:"Un detalle",text:`El amor no siempre llega vestido de fiesta.
+A veces llega en un mensaje,
+en una risa,
+en una pregunta sencilla:
+“¿ya comiste?”,
+“¿cómo estás?”,
+“¿llegaste bien?”.
+
+Y así, sin hacer demasiado ruido,
+un detalle se vuelve costumbre,
+la costumbre se vuelve cariño,
+y el cariño, cuando crece,
+termina pareciéndose a un hogar.`},
+{title:"Un recuerdo",text:`No quiero guardar solamente
+los días que parecían importantes.
+Quiero guardar también los normales:
+los minutos pequeños,
+las conversaciones sin horario,
+las risas que nadie más entendería.
+
+Porque contigo aprendí
+que un instante no necesita ser enorme
+para volverse eterno;
+a veces basta con que estés tú
+para que el recuerdo encuentre su lugar
+y decida quedarse.`},
+{title:"Una elección",text:`Llegar hasta aquí no significa
+haber vivido una historia sin nubes.
+Significa haber visto el cielo cambiar
+y aun así querer quedarse.
+
+Porque amar también es elegir:
+en el día claro,
+en la tarde gris,
+en el silencio,
+en el abrazo.
+
+Y entre tantas vueltas que da la vida,
+qué bonito que, después de todo,
+todavía haya una misma respuesta:
+tú.`}
+];
+
+const flowerTexts = [
+["Mes 1",`Aquí empezó nuestra historia:
+como nace una flor sin hacer ruido,
+como despierta el cielo después del frío.
+Un día más… y, sin saberlo,
+empezaba el camino que hoy recuerdo contigo.`],
+["Mes 2",`Ya no eras solamente alguien que quería.
+Eras esa pequeña luz de mis días,
+esa canción que aparecía de repente,
+esa costumbre bonita
+que mi corazón esperaba silenciosamente.`],
+["Mes 3",`Tres lunas, tres vueltas del calendario,
+y tú ya estabas en mis horas:
+en lo que pensaba,
+en lo que contaba,
+en aquello que hacía sonreír
+hasta a los días que llegaban con demora.`],
+["Mes 4",`Cuatro meses, y el cariño tenía raíces.
+Ya no era solo una emoción pasajera:
+era una casa dibujándose despacio,
+ladrillo por ladrillo,
+sueño por sueño,
+con tu risa haciendo de ventana.`],
+["Mes 5",`Cinco meses aprendiendo el idioma
+de querernos sin manual,
+con aciertos y tropiezos,
+pero con una certeza:
+que todavía había ganas de caminar
+un poco más juntos.`],
+["Mes 6",`Y aquí estamos.
+Seis meses, seis pequeñas lunas,
+seis capítulos que guardo con ternura.
+Y si el tiempo me pregunta qué quiero después,
+le responderé sin miedo:
+más páginas contigo.`]
+];
+
+const letters = [
+["Lo que admiro de ti",`Admiro esa forma tuya de ser tú,
+incluso cuando no ves en ti
+todo lo bonito que otros alcanzan a mirar.
+
+Admiro tus gestos pequeños,
+tu manera de sentir,
+tu carácter,
+tu risa,
+y esa parte de ti
+que a veces se esconde detrás de un “no sé”.
+
+Yo sí sé.
+
+Sé que hay una belleza que no vive solamente en los ojos,
+sino en la forma en que haces sentir a alguien.
+Y tú, mi amor,
+tienes esa clase de belleza
+que no necesita permiso para quedarse.`],
+["Lo que me haces sentir",`Contigo el corazón aprendió
+que también puede tener hogar.
+
+Hay días en los que basta tu nombre
+para cambiarme el color de la tarde.
+Hay noches en las que una conversación contigo
+parece alargar el reloj,
+como si el tiempo también quisiera escucharnos.
+
+Me haces sentir querido,
+pensado,
+acompañado.
+Y aunque a veces no encuentre la palabra exacta,
+siempre termino llegando al mismo lugar:
+a ti.`],
+["Lo que aprendí contigo",`Aprendí que amar no es saberlo todo.
+Es aprender.
+
+Aprendí que escuchar también es abrazar,
+que reconocer un error
+puede ser una forma de cariño,
+y que mejorar no significa dejar de ser uno mismo:
+significa intentar que el amor
+encontre una versión más amable de nosotros.
+
+Contigo entendí
+que una relación no se mide solo
+por los días en que todo sale bien,
+sino por las ganas de cuidar lo que importa
+cuando el cielo se nubla.`],
+["Lo que deseo para nosotros",`Deseo mañanas que todavía no existen,
+tardes que un día llamaremos recuerdos,
+fotografías que hoy son solamente imaginación,
+y conversaciones que aún no hemos tenido.
+
+Quiero más risas,
+más planes improvisados,
+más “mira esto”,
+más historias que comiencen con:
+“¿te acuerdas de…?”
+
+Quiero que algún día miremos hacia atrás
+y descubramos que estos seis meses
+eran apenas el primer verso
+de un poema muchísimo más largo.`],
+["Una promesa",`No voy a prometerte un camino sin lluvia,
+porque ningún cielo sabe quedarse siempre despejado.
+
+Te prometo algo más real:
+seguir aprendiendo,
+seguir escuchando,
+seguir intentando hacer las cosas bien,
+seguir buscando maneras
+de que nunca tengas que dudar
+de lo importante que eres para mí.
+
+Y cuando toque reconstruir alguna parte,
+que mis manos sepan quedarse
+para poner ladrillo sobre ladrillo,
+hasta volver a encontrar la luz.`],
+["Una carta para mi niña bonita",`Mi niña,
+
+si alguna vez dudas
+del lugar que ocupas en mi corazón,
+recuerda esto:
+
+no llegaste a una página vacía.
+
+Llegaste a una historia
+que ahora tiene tu risa entre sus líneas,
+tu presencia entre sus páginas
+y tu nombre escondido
+en muchísimos pequeños recuerdos.
+
+Y hoy, después de seis meses,
+lo que más me emociona
+no es decir “ya llevamos seis”.
+
+Es saber
+que todavía existen tantos capítulos
+que no conocemos,
+tantos lugares por descubrir,
+tantas noches por recordar.
+
+Y qué bonito sería
+que muchas de ellas
+nos encontraran juntos.`]
+];
+
+const houseZones = [
+  ["SALA","Una sala para conversaciones largas, películas empezadas tarde y risas por cosas que nadie más entendería.","couch"],
+  ["HABITACIÓN","Un rincón para días tranquilos, abrazos y esa paz que solamente aparece cuando uno está con la persona correcta.","bed"],
+  ["COCINA","Un lugar donde seguramente discutiremos quién dejó algo fuera de su sitio… y luego terminaremos riéndonos.","kitchen"],
+  ["JARDÍN","Un lugar para tardes lentas, plantas, cielo abierto y momentos en los que no haga falta decir demasiado.","tree"],
+  ["ESPACIO PARA GATOS","Porque aparentemente nuestro futuro necesita pequeños dueños que se crean los verdaderos propietarios de la casa.","cat"],
+  ["ESPACIO PARA PERROS","Y porque nuestro futuro, al parecer, también tendrá cuatro patas y muchísimo desorden bonito.","dog"]
+];
+
+const museumItems = [
+["El cuadro que me regalaste",`Hay regalos que llegan envueltos en papel,
+y hay regalos que llegan convertidos en recuerdo.
+
+Tú me regalaste un cuadro de Canserbero,
+y yo lo guardé como se guardan
+las cosas que tienen algo de historia:
+con una sonrisa,
+con sorpresa,
+con ese pensamiento silencioso de
+“qué bonito que ella haya pensado en mí”.
+
+No era solamente un cuadro.
+Era una parte de ti
+llegando a mis manos.`],
+["Los días pequeños",`Las historias bonitas no viven solamente
+en las fechas importantes.
+
+También viven en una conversación cualquiera,
+en una risa que se escapa,
+en una tarde sencilla,
+en un “te extraño”
+dicho sin preparación.
+
+Son pequeños pedazos de tiempo
+que parecen poca cosa
+hasta que un día miras atrás
+y descubres que eran la verdadera colección.`],
+["Nuestro museo",`Y entonces está este cuadro:
+nuestro propio museo,
+hecho de fotografías nuestras,
+de momentos detenidos en el tiempo,
+de miradas que alguna vez fueron presente
+y ahora viven impresas.
+
+Me gusta pensar que tú también construiste
+una pequeña galería de nosotros.
+Como si hubieras tomado recuerdos
+y les hubieras dicho:
+“quédense aquí,
+no se vayan todavía”.
+
+Y yo quiero cuidar ese museo
+con la misma ternura con la que se cuida
+algo que uno no quiere olvidar jamás.`],
+["La risa",`Hay recuerdos que no necesitan fotografía.
+
+Basta una risa.
+
+Basta cerrar los ojos
+y recordar cómo sonaba,
+para que la escena vuelva
+con su propia luz.
+
+Porque hay personas
+que dejan imágenes,
+y hay personas que dejan melodías.
+
+Tú me dejaste ambas.`],
+["Lo que seguimos construyendo",`Todavía quedan paredes vacías.
+Todavía existen marcos sin fotografía.
+Todavía hay espacio
+para que el futuro nos sorprenda.
+
+Y honestamente,
+me encanta.
+
+Porque significa que nuestra historia
+todavía no está completa.
+
+Que aún podemos llenar la pared
+con nuevas fechas,
+nuevas sonrisas,
+nuevas aventuras
+y nuevos “¿te acuerdas?” que algún día
+van a convertirse en tesoros.`],
+["El cuadro vacío",`Este cuadro no tiene título.
+
+No porque le falte una historia,
+sino porque todavía le falta el momento.
+
+Quizá algún día tenga una fotografía,
+quizá un lugar,
+quizá una fecha que todavía no existe.
+
+Por ahora lo dejo vacío.
+
+Como se deja una página abierta
+cuando uno sabe
+que todavía queda mucho por escribir.`]
+];
+
+const finalLetter = `Mi amor:
+
+Hoy cumplimos seis meses, y antes de decirte cualquier otra cosa quiero que cierres por un segundo los ojos y pienses en todo lo que ha pasado desde aquel comienzo. Piensa en los días que parecían normales y terminaron quedándose en la memoria. Piensa en las conversaciones que se hicieron largas, en las risas que aparecieron de la nada, en las veces que simplemente estar juntos hizo que el día se sintiera distinto.
+
+Hoy cumplimos seis meses, y mientras hacía este pequeño universo pensé en algo muy sencillo: seis meses pueden parecer solamente una cifra, pero cuando los llenas de conversaciones, de risas, de nervios, de pequeños detalles, de días fáciles y días difíciles, dejan de ser una cifra. Se convierten en una historia.
+
+Y quiero decirte algo que quizá sea incluso más importante: no todo tiene que haber sido perfecto para ser importante. De hecho, quizá una de las cosas más bonitas de nosotros sea que hemos ido aprendiendo sobre la marcha. Hemos tenido momentos en los que todo parecía sencillo y otros en los que tuvimos que detenernos, pensar, escucharnos y aprender. Eso también forma parte de querer de verdad. No quiero borrar ninguna página; quiero aprender de cada una. Hemos tenido momentos hermosos y otros que nos han enseñado. Y aun así, entre todo eso, hay algo que no cambia cuando cierro los ojos y pienso en ti: te amo.
+
+Te amo por quien eres, no por una versión inventada de ti. Te amo en tus días alegres y también en esos días en los que quizá tú misma olvidas lo mucho que vales. Te amo en las pequeñas cosas que haces sin darte cuenta. Te amo en las conversaciones que recuerdo después. Te amo porque, de alguna manera que todavía me sorprende, terminaste convirtiéndote en una parte de mi mundo que ya no quiero imaginar ausente.
+
+Me gusta pensar que estos seis meses no son una meta. Son una puerta. Una puerta hacia todos esos días que todavía no tienen nombre, hacia fotografías que todavía no existen, hacia conversaciones que todavía no hemos tenido y hacia recuerdos que hoy son solamente posibilidades.
+
+Me gustaría que algún día podamos mirar esta fecha desde muchos años después y decir: “Mira todo lo que comenzó aquí”. Que podamos recordar este momento no solamente porque cumplimos seis meses, sino porque fue uno de tantos capítulos que decidimos seguir escribiendo juntos.
+
+Quiero seguir coleccionando recuerdos contigo. Quiero que algún día miremos atrás y tengamos tantas historias que no sepamos cuál contar primero. Quiero seguir construyendo esa idea de un hogar que alguna vez imaginamos, con rincones que tengan un poco de ti, un poco de mí y mucho de nosotros. Quiero las mascotas, las risas, los días tranquilos, los planes improvisados y hasta las discusiones tontas sobre quién tiene la razón.
+
+Y sobre todo quiero seguir eligiéndote.
+
+No porque el amor sea perfecto, sino porque eres tú.
+
+Gracias por estos seis meses, mi amor. Gracias por cada recuerdo que ya existe y por todos los que todavía no conocemos. Gracias por las veces que me has hecho sonreír sin darte cuenta. Gracias por cada detalle que quizá para ti parecía pequeño y que para mí terminó teniendo un significado enorme. Gracias por existir de esa manera tan tuya, por ser tú, con todo lo bonito, lo complejo, lo espontáneo y lo real.
+
+Y si alguna vez vuelves a abrir este juego, quiero que recuerdes que no lo hice solamente para celebrar una fecha. Lo hice porque quería construirte un pequeño lugar al que pudieras volver y encontrar una prueba sencilla de algo que a veces las palabras no alcanzan a explicar: que estos seis meses importan muchísimo para mí.
+
+Si pudiera volver al principio sabiendo todo lo que sé ahora, volvería a acercarme a ti.
+
+Volvería a escogerte.
+
+Te volvería a querer.
+
+Y te elegiría otra vez.`;
+
+let state = {
+  current:'start',
+  memories:0,
+  flowers:0,
+  letters:0,
+  puzzleSolved:false,
+  house:0,
+  museum:0,
+  heartsLit:5,
+  music:false
+};
+
+let selectedPuzzle = null;
+let puzzleOrder = [];
+
+function qs(sel){ return document.querySelector(sel); }
+function qsa(sel){ return Array.from(document.querySelectorAll(sel)); }
+
+function seededRandom(seed){
+  let x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+function createStars(){
+  const wrap = qs('#bgStars');
+  wrap.innerHTML = '';
+  for(let i=0;i<70;i++){
+    const s=document.createElement('span');
+    s.className='star';
+    const size = 1 + seededRandom(i+5)*3.2;
+    s.style.width = size+'px';
+    s.style.height = size+'px';
+    s.style.left = (seededRandom(i+20)*100)+'%';
+    s.style.top = (seededRandom(i+80)*100)+'%';
+    s.style.animationDelay = (seededRandom(i+130)*3)+'s';
+    s.style.animationDuration = (1.8+seededRandom(i+200)*2.7)+'s';
+    wrap.appendChild(s);
+  }
+}
+
+function burst(count=28){
+  const wrap=qs('#particles');
+  for(let i=0;i<count;i++){
+    const p=document.createElement('span');
+    p.className='particle';
+    p.style.left=(30+Math.random()*40)+'%';
+    p.style.top=(45+Math.random()*25)+'%';
+    p.style.animationDuration=(.9+Math.random()*1.5)+'s';
+    wrap.appendChild(p);
+    setTimeout(()=>p.remove(),2600);
+  }
+}
+
+function confetti(){
+  const wrap=qs('#confetti');
+  wrap.innerHTML='';
+  for(let i=0;i<80;i++){
+    const s=document.createElement('span');
+    s.style.left=Math.random()*100+'%';
+    s.style.top='-20px';
+    s.style.setProperty('--x',((Math.random()-.5)*160)+'vw');
+    s.style.animationDelay=(Math.random()*.5)+'s';
+    s.style.background = ['#f6a9cf','#f5d18d','#9da8ff','#fff'][i%4];
+    s.style.transform='rotate('+Math.random()*180+'deg)';
+    wrap.appendChild(s);
+  }
+  setTimeout(()=>wrap.innerHTML='',2600);
+}
+
+function goTo(id){
+  const target=qs('#'+id);
+  if(!target)return;
+  qsa('.screen').forEach(s=>s.classList.remove('active'));
+  target.classList.add('active');
+  state.current=id;
+  window.scrollTo({top:0,behavior:'instant'});
+  if(id==='world2') setupGarden();
+  if(id==='world3') setupLetters();
+  if(id==='world4') setupPuzzle();
+  if(id==='world5') setupHouse();
+  if(id==='world6') setupMuseum();
+  if(id==='hearts') setupHearts();
+  if(id==='final') startFinal();
+}
+
+function startGame(){
+  state = {current:'world1',memories:0,flowers:0,letters:0,puzzleSolved:false,house:0,museum:0,heartsLit:5,music:false};
+  resetAllWorlds();
+  goTo('world1');
+  burst(16);
+}
+
+function restartGame(){
+  startGame();
+}
+
+function resetAllWorlds(){
+  qsa('.memory').forEach((b,i)=>{
+    b.classList.remove('found');
+    if(i<5)b.classList.remove('locked');
+  });
+  qs('#hiddenMemory').style.display='none';
+  qs('#memoryCount').textContent='0 / 5 recuerdos';
+  qs('#world1Note').textContent='Encuentra las cinco estrellas para abrir el siguiente secreto.';
+  qs('#garden').querySelectorAll('.flower,.firefly').forEach(e=>e.remove());
+  qs('#letterGrid').innerHTML='';
+  qs('#puzzleMessage').textContent='';
+  qs('#unlockGrid').innerHTML='';
+  qs('#museum').innerHTML='';
+  qs('#goHearts').style.display='none';
+  qs('#heartRow').innerHTML='';
+  qs('#finalLetter').style.display='none';
+  qs('#finalIntro').textContent='Creíste que este era el final.';
+  qs('#finalNo').textContent='No.';
+  qs('#finalMissing').textContent='Me faltaba decirte algo.';
+}
+
+function openModal(title,text){
+  qs('#modalBody').innerHTML='<h3>'+htmlEscape(title)+'</h3><p>'+htmlEscape(text)+'</p>';
+  qs('#modal').classList.add('show');
+  qs('#modal').setAttribute('aria-hidden','false');
+}
+
+function closeModal(){
+  qs('#modal').classList.remove('show');
+  qs('#modal').setAttribute('aria-hidden','true');
+}
+
+function htmlEscape(value){
+  return value.replace(/[&<>"']/g, ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+qsa('[data-memory]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    if(btn.classList.contains('found')) return;
+    const idx=Number(btn.dataset.memory);
+    btn.classList.add('found');
+    state.memories++;
+    qs('#memoryCount').textContent=state.memories+' / 5 recuerdos';
+    openModal(memoryTexts[idx].title,memoryTexts[idx].text);
+    burst(10);
+    if(state.memories===5){
+      const hidden=qs('#hiddenMemory');
+      hidden.style.display='block';
+      hidden.classList.add('locked');
+      qs('#world1Note').textContent='Cinco recuerdos encontrados. Ahora busca la estrella que no pertenece al pasado.';
+    }
+  });
+});
+
+qs('#hiddenMemory').addEventListener('click',()=>{
+  if(state.memories<5)return;
+  openModal('Quizá algunos recuerdos todavía no han ocurrido.','Eso es lo bonito del futuro: todavía tiene espacios en blanco. Ya encontraste cinco recuerdos. Los demás tendremos que vivirlos.');
+  goTo('world2');
+});
+
+function setupGarden(){
+  const garden=qs('#garden');
+  if(garden.querySelector('.flower'))return;
+  const positions=[
+    [11,66],[29,56],[51,73],[73,54],[85,71],[43,39]
+  ];
+  positions.forEach((pos,idx)=>{
+    const b=document.createElement('button');
+    b.className='flower';
+    b.style.left=pos[0]+'%';
+    b.style.top=pos[1]+'%';
+    b.dataset.flower=idx;
+    b.setAttribute('aria-label','Flor '+(idx+1));
+    b.addEventListener('click',()=>collectFlower(idx,b));
+    garden.appendChild(b);
+    const stem=document.createElement('span');
+    stem.className='flower-stem';
+    stem.style.left=(pos[0]+2.0)+'%';
+    stem.style.top=(pos[1]+5.5)+'%';
+    garden.appendChild(stem);
+    const leaf=document.createElement('span');
+    leaf.className='flower-leaf';
+    leaf.style.left=(pos[0]+0.2)+'%';
+    leaf.style.top=(pos[1]+15)+'%';
+    garden.appendChild(leaf);
+  });
+  for(let i=0;i<14;i++){
+    const f=document.createElement('span');
+    f.className='firefly';
+    f.style.left=(5+Math.random()*90)+'%';
+    f.style.top=(22+Math.random()*65)+'%';
+    f.style.animationDelay=Math.random()*3+'s';
+    garden.appendChild(f);
+  }
+}
+
+function collectFlower(idx,btn){
+  if(btn.classList.contains('found'))return;
+  btn.classList.add('found');
+  state.flowers++;
+  const data=flowerTexts[idx];
+  openModal(data[0],data[1]);
+  qs('#flowerCount').textContent=state.flowers+' / 6 flores';
+  if(state.flowers===6){
+    const special=document.createElement('button');
+    special.className='flower';
+    special.style.left='50%'; special.style.top='12%'; special.style.transform='translateX(-50%) scale(1.12)';
+    special.style.background='radial-gradient(circle,#fff 0 14%,#f5d18d 15% 36%,#f27fa9 37% 64%,transparent 65%)';
+    special.id='specialFlower';
+    special.title='La flor que no pertenece a ningún mes';
+    special.addEventListener('click',()=>{
+      openModal('Una flor sin calendario','Esta no pertenece a ningún mes. Esta pertenece a todo lo que todavía nos falta vivir.');
+      setTimeout(()=>goTo('world3'),350);
+    });
+    garden.appendChild(special);
+    qs('#gardenNote').textContent='El jardín está completo. Pero apareció una flor que no pertenece a ningún mes.';
+    burst(14);
+  }
+}
+
+function setupLetters(){
+  const grid=qs('#letterGrid');
+  if(grid.children.length)return;
+  letters.forEach((item,idx)=>{
+    const card=document.createElement('button');
+    card.className='card letter';
+    card.innerHTML='<div class="seal">✉️</div><h3>'+htmlEscape(item[0])+'</h3><p>Toca para abrir.</p>';
+    card.addEventListener('click',()=>{
+      if(!card.dataset.opened){
+        card.dataset.opened='true';
+        state.letters++;
+        card.classList.add('flash');
+        card.querySelector('p').textContent='Abierta ✓';
+        openModal(item[0],item[1]);
+        qs('#letterNote').textContent=state.letters+' / 6 cartas abiertas.';
+        if(state.letters===6){
+          qs('#letterNote').textContent='Todas las cartas están abiertas. Ya puedes seguir.';
+          const b=document.createElement('button');
+          b.className='cta';
+          b.textContent='IR A LAS PIEZAS 🧩';
+          b.onclick=()=>goTo('world4');
+          qs('#letterNote').insertAdjacentElement('afterend',b);
+        }
+      }
+    });
+    grid.appendChild(card);
+  });
+}
+
+function resetPuzzle(){
+  const base=[0,1,2,3,4,5,6,7,8];
+  do{
+    puzzleOrder=base.slice().sort(()=>Math.random()-.5);
+  }while(puzzleOrder.every((v,i)=>v===i));
+  selectedPuzzle=null;
+  renderPuzzle();
+}
+
+function setupPuzzle(){
+  if(!puzzleOrder.length || state.puzzleSolved===true) {
+    if(state.puzzleSolved){
+      renderSolvedPuzzle();
+      return;
+    }
+    resetPuzzle();
+  } else renderPuzzle();
+}
+
+function renderPuzzle(){
+  const grid=qs('#puzzle');
+  grid.innerHTML='';
+  puzzleOrder.forEach((value,idx)=>{
+    const b=document.createElement('button');
+    b.className='piece';
+    b.textContent=value+1;
+    b.dataset.index=idx;
+    b.dataset.value=value;
+    b.addEventListener('click',()=>selectPiece(idx));
+    grid.appendChild(b);
+  });
+  updatePuzzleStatus();
+}
+
+function renderSolvedPuzzle(){
+  const grid=qs('#puzzle');
+  grid.innerHTML='';
+  for(let i=0;i<9;i++){
+    const b=document.createElement('div');
+    b.className='piece';
+    b.textContent=i+1;
+    grid.appendChild(b);
+  }
+  qs('#puzzleMessage').innerHTML='<div class="poem">NO ERA UN ROMPECABEZAS.</div><div class="poem">Era una forma de decirte que…<br><strong>contigo, hasta las piezas que parecían perdidas encontraron su lugar.</strong></div><button class="cta" onclick="goTo(\'world5\')">CONSTRUIR NUESTRO FUTURO 🏠</button>';
+}
+
+function selectPiece(idx){
+  if(state.puzzleSolved)return;
+  if(selectedPuzzle===null){
+    selectedPuzzle=idx;
+    qs('#puzzle').children[idx].style.outline='3px solid rgba(245,209,141,.85)';
+    return;
+  }
+  if(selectedPuzzle===idx){
+    qs('#puzzle').children[idx].style.outline='';
+    selectedPuzzle=null;
+    return;
+  }
+  [puzzleOrder[selectedPuzzle],puzzleOrder[idx]]=[puzzleOrder[idx],puzzleOrder[selectedPuzzle]];
+  selectedPuzzle=null;
+  renderPuzzle();
+  if(puzzleOrder.every((v,i)=>v===i)){
+    state.puzzleSolved=true;
+    burst(18);
+    confetti();
+    renderSolvedPuzzle();
+  }
+}
+
+function updatePuzzleStatus(){
+  const correct=puzzleOrder.filter((v,i)=>v===i).length;
+  qs('#puzzleStatus').textContent=correct+' / 9 en su lugar';
+}
+
+function setupHouse(){
+  const grid=qs('#unlockGrid');
+  if(grid.children.length)return;
+  houseZones.forEach((z,idx)=>{
+    const b=document.createElement('button');
+    b.className='unlock';
+    b.innerHTML='<strong>'+htmlEscape(z[0])+'</strong><div class="small">Bloqueado</div>';
+    b.addEventListener('click',()=>{
+      if(b.classList.contains('done'))return;
+      b.classList.add('done');
+      b.querySelector('.small').textContent='Desbloqueado ✓';
+      const item=qs('.house-item.'+z[2]);
+      if(item)item.classList.add('show');
+      state.house++;
+      openModal(z[0],z[1]);
+      qs('#houseNote').textContent=state.house+' / 6 rincones construidos.';
+      if(state.house===6){
+        setTimeout(()=>{
+          openModal('Todavía no existe…','Pero me gusta imaginarla. Porque si algún día construimos un hogar, quiero que tenga un poco de ti en cada rincón.');
+          const next=document.createElement('button');
+          next.className='cta';
+          next.textContent='ENTRAR A NUESTRO MUSEO 🖼️';
+          next.onclick=()=>goTo('world6');
+          qs('#houseNote').insertAdjacentElement('afterend',next);
+          burst(18);
+        },250);
+      }
+    });
+    grid.appendChild(b);
+  });
+}
+
+function setupMuseum(){
+  const grid=qs('#museum');
+  if(grid.children.length)return;
+  museumItems.forEach((item)=>{
+    const frame=document.createElement('button');
+    frame.className='frame';
+    frame.innerHTML='<span>'+htmlEscape(item[0])+'</span>';
+    frame.addEventListener('click',()=>{
+      openModal(item[0],item[1]);
+      if(!frame.dataset.opened){
+        frame.dataset.opened='true';
+        state.museum++;
+        if(state.museum===museumItems.length){
+          qs('#museumNote').textContent='El museo está completo. Solo queda el sexto corazón.';
+          qs('#goHearts').style.display='inline-flex';
+          burst(12);
+        }
+      }
+    });
+    grid.appendChild(frame);
+  });
+}
+
+const heartVerses=[
+ `I · Donde comenzó la luz — “Un día llegaste, y el corazón aprendió a mirar el tiempo de otra manera.”`,
+ `II · La costumbre bonita — “Te fuiste volviendo parte de mis días, como la luna se vuelve parte de la noche sin pedir permiso.”`,
+ `III · Lo que florece — “Entre palabra y palabra, entre risa y risa, nació un cariño que ya tenía raíces.”`,
+ `IV · El hogar — “A veces hogar no es una casa: es la calma de saber que existe alguien con quien quieres volver.”`,
+ `V · Elegir — “Entre tantas vueltas del mundo, qué bonito coincidir contigo y seguir diciendo: aquí me quedo.”`,
+ `VI · Todavía — “Y este último corazón no guarda un recuerdo: guarda todo lo que todavía nos falta vivir.”`
+];
+function setupHearts(){
+  const row=qs('#heartRow'); row.innerHTML=''; qs('#heartVerse').textContent='';
+  for(let i=0;i<6;i++){
+    const b=document.createElement('button'); b.className='big-heart '+(i<5?'lit':'off'); b.textContent='♥'; b.title='Mes '+(i+1);
+    if(i<5){ b.onclick=()=>{qs('#heartVerse').textContent=heartVerses[i];burst(5)}; }
+    else { b.onclick=()=>unlockSixthHeart(b); }
+    row.appendChild(b);
+  }
+}
+
+function unlockSixthHeart(btn){
+  if(btn.classList.contains('lit'))return;
+  btn.classList.remove('off'); btn.classList.add('lit'); state.heartsLit=6;
+  qs('#heartNote').textContent='6 MESES. El último corazón no guarda un recuerdo: guarda una promesa de futuro.';
+  qs('#heartVerse').textContent=heartVerses[5]; confetti(); burst(30); btn.classList.add('flash');
+  setTimeout(()=>goTo('final'),2500);
+}
+
+function startFinal(){
+  qs('#finalLetter').style.display='none';
+  qs('#finalIntro').textContent='Creíste que este era el final.';
+  qs('#finalNo').textContent='No.';
+  qs('#finalMissing').textContent='Me faltaba decirte algo.';
+  setTimeout(()=>{
+    qs('#finalLetter').style.display='block';
+    typeLetter();
+  },1300);
+}
+
+function typeLetter(){
+  const box=qs('#typewriter');
+  const ps=qs('#postscript');
+  ps.classList.remove('show');
+  box.textContent='';
+  let i=0;
+  const timer=setInterval(()=>{
+    box.textContent+=finalLetter.charAt(i);
+    i++;
+    if(i>=finalLetter.length){
+      clearInterval(timer);
+      setTimeout(()=>ps.classList.add('show'),900);
+    }
+  },12);
+}
+
+function showLastSecret(){
+  goTo('last');
+  burst(30);
+}
+
+function toggleMusic(){
+  state.music=!state.music;
+  const buttons=qsa('.iconbtn');
+  buttons.forEach(b=>{
+    if(b.textContent.trim()==='♫') b.setAttribute('aria-label',state.music?'Sonido activado':'Sonido desactivado');
+  });
+  if(state.music){
+    openModal('Música opcional','El juego está preparado para que añadas una canción local si quieres. No se reproduce audio automáticamente ni necesita internet.');
+  }
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')closeModal();
+});
+
+qs('#modal').addEventListener('click',e=>{
+  if(e.target.id==='modal')closeModal();
+});
+
+createStars();
+</script>
+</body>
+</html>
